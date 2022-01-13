@@ -86,7 +86,7 @@ Follow the follwoing steps  (tested on our OS 11.3 machine with Python 3.7.7):
 - `1_downloadPdf.py`: download the pdf of the papers using [PyPaperBot](https://github.com/ZeinabAk/PyPaperBot).
 - `2_Cermine.py`: Extract the text from the Pdf files into xml files the pdf.
 - `3_XmlToText.py`: Transform the XML files into text files.
-- `4_NLP.py`: Generate n-grams and update the database.
+- `4_Ngrams.py`: Generate n-grams and update the database.
 
 ## How to use
 
