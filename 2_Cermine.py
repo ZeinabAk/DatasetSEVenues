@@ -3,7 +3,7 @@ import os
 from os import path
 from sqlalchemy import create_engine
 import shutil
-from NLPfucntions import *
+from globalFucntions import *
 import argparse
 
 pparser = argparse.ArgumentParser()
@@ -37,7 +37,6 @@ if not Minyear is None:
 engine =  create_engine('postgresql://'+params['user']+':'+params['password']+'@'+params['host']+':5432/'+params['database'])
 conn = engine.connect()
 
-
 count=0
 conferences=conn.execute("SELECT * FROM venues"+ConditionVenue+";")
 for conf in conferences:  
@@ -55,10 +54,9 @@ for conf in conferences:
                 if (not path.exists(os.path.join(Cpath,filename+".cermxml"))) & (not path.exists(os.path.join(Cpath,filename+".pdf"))):  
                     try:
                         filename=filename+'.pdf'
-                        count=count+1
                         shutil.copy(os.path.join(pdfpath,str(filename)), Cpath)
                     except Exception as e:   
-                        #count=count+1
+                        count=count+1
                         pass
             else:
                 count=count+1
@@ -66,7 +64,7 @@ for conf in conferences:
             count=count+1 
             print(e)
                 
-print('number of not found pdfs:',count)
+print('number of pdfs not found:',count)
 
 
 
@@ -74,9 +72,8 @@ print('Running Cermine')
 conferences=conn.execute("SELECT * FROM venues;")
 for conf in conferences:  
     Cpath = dbPaths+'/cermineXML/'+conf['acronym']
-    #print(conf['acronym'])
     drun="-cp cermine.jar pl.edu.icm.cermine.ContentExtractor -path " +Cpath
-    #subprocess.call(['java'] + drun.split())
+    subprocess.call(['java'] + drun.split())
     
     
     
@@ -104,4 +101,4 @@ for conf in conferences:
         #print(dbPath, count)
     count=0  
     
-print("The conf pdf files that was not parsed by Cermine:", tcount)    
+print("The pdf files that was not parsed by Cermine:", tcount)    

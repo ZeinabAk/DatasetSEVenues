@@ -3,7 +3,7 @@ import os
 from os import path
 from sqlalchemy import create_engine
 import shutil
-from NLPfucntions import *
+from globalFucntions import *
 import argparse
 
 
@@ -54,8 +54,6 @@ for conf in confs:
     result_set=conn.execute("SELECT id, title, ee, year, doi FROM papers WHERE venue_id="+str(conf['id'])+ConditionYear+";")
     for paper in result_set: 
         try:
-            #filename=str(paper['doi']) 
-            #fname=filename.replace("/", "\\")
             doi=paper['ee'][0].replace("https://doi.org/", "", 1)
             doi=doi.replace("http://doi.ieeecomputersociety.org/", "", 1).replace("/", "\\", 2)
             fname=doi
@@ -65,28 +63,22 @@ for conf in confs:
             try:
                 if not path.exists(os.path.join(CTpath,fname+".txt")): 
                     try:
-                        try:
-                            paragraph=cermineText(Cpath,fname)
-                            if (paragraph!=None) &  (len(paragraph)>300):
-                                with open(os.path.join(CTpath,fname+".txt"), 'w') as f:
-                                    f.write(paragraph) 
-                            else:
-                                count=count+1
-                        except Exception as e:
-                            #print('1',e)
+                        paragraph=cermineText(Cpath,fname)
+                        if (paragraph!=None) &  (len(paragraph)>300):
+                            with open(os.path.join(CTpath,fname+".txt"), 'w') as f:
+                                f.write(paragraph) 
+                        else:
                             count=count+1
-                            pass      
                     except Exception as e:
-                        print('2',e)
+                        print('1',e)
                         count=count+1
                         pass
             except Exception as e:
-                print('3',e)
+                print('2',e)
                 count=count+1
                 pass
         except Exception as e:
-            #print('4',e)
-
+            print('3',e)
             pass  
                     
 print(count,'papers out of',Tcount,'can\'t be extracted')

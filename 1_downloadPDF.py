@@ -4,7 +4,7 @@ from os import path
 from sqlalchemy import create_engine
 import ast
 import argparse
-from NLPfucntions import config
+from globalFucntions import config
 
 pparser = argparse.ArgumentParser()
 pparser.add_argument('--dir', required=True, help='directory')
@@ -40,8 +40,7 @@ engine =  create_engine('postgresql://'+params['user']+':'+params['password']+'@
 conn = engine.connect()
 count=0
 tcount=0
-ncount=0
-    
+
 conferences=conn.execute("SELECT * FROM venues"+ConditionVenue+";")
 for conf in conferences:  
     pdfpath = dbPaths+'/pdf/'+conf['acronym']
@@ -53,7 +52,7 @@ for conf in conferences:
         tcount=tcount+1
         try:
             doi=paper['ee'][0].replace("https://doi.org/", "", 1)
-            doi=doi.replace("http://doi.ieeecomputersociety.org/", "", 1)#.replace("/", "\\", 2)
+            doi=doi.replace("http://doi.ieeecomputersociety.org/", "", 1)
             filename=doi
             if not path.exists(os.path.join(pdfpath, doi.replace("/", "\\")+'.pdf')):
                 count=count+1
@@ -61,7 +60,7 @@ for conf in conferences:
                 command.extend(arguments) 
                 #output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0] 
         except Exception as e:
-            ncount=ncount+1
+            count=count+1
             pass
 
-print('Number of papers that are not downloaded:',count,'out of', tcount,ncount)
+print('Number of papers that are not downloaded:',count,'out of', tcount)
