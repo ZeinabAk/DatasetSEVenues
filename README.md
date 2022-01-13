@@ -50,7 +50,7 @@ The data is stored in a PostgreSQL database (see the [PostgreSQL Dump](https://g
 
 
 
-<img align="center" width="60%" src="https://github.com/ZeinabAk/ConferencesData/blob/main/db/schema.png">
+<img align="center" width="60%" src="https://github.com/ZeinabAk/DatasetSEVenues/blob/main/db/schema.png">
 
 
 
