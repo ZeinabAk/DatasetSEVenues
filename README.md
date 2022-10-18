@@ -99,3 +99,8 @@ Python files arguments:
 | \-\-Maxyear        | maximum year of publication, defaults to None | (int, optional)
 | \-\-Minyear        | minimum year of publication, defaults to None | (int, optional)
 
+
+
+##Full Zenodo package
+
+DOI: 10.5281/zenodo.5902230
